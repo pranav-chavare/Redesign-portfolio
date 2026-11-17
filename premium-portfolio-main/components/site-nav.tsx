@@ -1,57 +1,56 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 const LINKS = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
-  { id: "skills", label: "Skills" },
-  { id: "connect", label: "Connect" },
+  { id: "skills", label: "Stack" },
+  { id: "playground", label: "Playground" },
+  { id: "connect", label: "Contact" },
 ];
 
-// Floating pill navigation. Highlights the section currently in view.
 export function SiteNav() {
   const [active, setActive] = useState("about");
 
   useEffect(() => {
-    const sections = LINKS.map((l) => document.getElementById(l.id)).filter(
-      (el): el is HTMLElement => el !== null
+    const sections = LINKS.map((link) => document.getElementById(link.id)).filter(
+      (element): element is HTMLElement => element !== null
     );
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
-          .filter((e) => e.isIntersecting)
+          .filter((entry) => entry.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) setActive(visible[0].target.id);
       },
-      { rootMargin: "-35% 0px -55% 0px" }
+      { rootMargin: "-30% 0px -60% 0px" }
     );
-    sections.forEach((s) => observer.observe(s));
+    sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-3 z-30 flex justify-center px-2">
-      <nav
-        aria-label="Main"
-        className="flex items-center rounded-full border border-rule bg-card/90 p-1 shadow-[0_8px_24px_-14px_rgba(21,24,26,0.45)] backdrop-blur"
-      >
-        {LINKS.map((link) => {
-          const isActive = active === link.id;
-          return (
+    <header className="site-header">
+      <nav aria-label="Main navigation" className="site-nav">
+        <a href="#about" className="nav-mark" aria-label="Pranav Chaware — home">PC<span>.</span></a>
+        <div className="nav-links">
+          {LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
-              aria-current={isActive ? "true" : undefined}
-              className={`rounded-full px-2.5 py-1.5 font-display text-[0.8125rem] font-medium transition-colors sm:px-4 sm:text-sm ${
-                isActive ? "bg-ink text-paper" : "text-ink/75 hover:bg-ink/5 hover:text-ink"
-              }`}
+              aria-current={active === link.id ? "location" : undefined}
+              className={active === link.id ? "nav-link is-active" : "nav-link"}
             >
               {link.label}
             </a>
-          );
-        })}
+          ))}
+        </div>
+        <a className="nav-resume" href="mailto:pranavchavare1008@gmail.com">
+          Say hello <ArrowUpRight size={14} />
+        </a>
       </nav>
     </header>
   );
