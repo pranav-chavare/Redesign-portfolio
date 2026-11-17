@@ -4,19 +4,16 @@ interface SectionProps {
   id: string;
   title: string;
   children: ReactNode;
+  note?: string;
 }
 
-// Shared wrapper so every section has the same width, rhythm and heading style.
-export function Section({ id, title, children }: SectionProps) {
+export function Section({ id, title, children, note }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="mx-auto max-w-page px-6 py-14 sm:py-20">
-      <h2
-        id={`${id}-title`}
-        className="mb-10 flex items-center gap-5 text-[1.75rem] font-semibold tracking-tight sm:text-[2rem]"
-      >
-        {title}
-        <span aria-hidden className="h-px flex-1 bg-rule" />
-      </h2>
+    <section id={id} aria-labelledby={`${id}-title`} className="content-section">
+      <div className="section-heading">
+        <div><p className="section-kicker">{note ?? "A closer look"}</p><h2 id={`${id}-title`}>{title}</h2></div>
+        <span className="section-index">{String(["projects","experience","stack","playground","connect"].indexOf(id) + 1).padStart(2,"0")}</span>
+      </div>
       {children}
     </section>
   );
