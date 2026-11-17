@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { SITE } from "@/lib/data";
 import "./globals.css";
 
-const SITE_URL = "https://pranav-chavare.github.io/premium-portfolio/";
+const SITE_URL = "https://pranav-chavare.github.io/Redesign-portfolio/";
 const SITE_TITLE = `${SITE.name} — ${SITE.role}`;
 
 export const metadata: Metadata = {
@@ -12,22 +12,13 @@ export const metadata: Metadata = {
   keywords: [SITE.name, "MLOps Engineer", "DevOps Engineer", "Cloud Engineer", "Data Engineer", "Portfolio"],
   authors: [{ name: SITE.name, url: SITE_URL }],
   creator: SITE.name,
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: SITE_URL,
-    title: SITE_TITLE,
-    description: SITE.tagline,
-    siteName: SITE.name,
-  },
+  openGraph: { type: "website", locale: "en_US", url: SITE_URL, title: SITE_TITLE, description: SITE.tagline, siteName: SITE.name },
   twitter: { card: "summary", title: SITE_TITLE, description: SITE.tagline },
   robots: { index: true, follow: true },
   alternates: { canonical: SITE_URL },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#f2f3ef",
-};
+export const viewport: Viewport = { themeColor: "#f7f7f4" };
 
 function PersonJsonLd() {
   const jsonLd = {
@@ -47,10 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <PersonJsonLd />
-        <a
-          href="#content"
-          className="sr-only z-50 rounded-full bg-ink px-4 py-2 font-display text-sm text-paper focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
-        >
+        <a href="#content" className="sr-only z-50 rounded-full bg-ink px-4 py-2 font-display text-sm text-paper focus:not-sr-only focus:fixed focus:left-3 focus:top-3">
           Skip to content
         </a>
         {children}

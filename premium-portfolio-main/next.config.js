@@ -1,18 +1,13 @@
 /** @type {import('next').NextConfig} */
-// The site is deployed to GitHub Pages under /premium-portfolio, so every asset
-// URL needs this prefix. If you move to a custom domain, set basePath to "".
-const basePath = "/premium-portfolio";
+// GitHub Pages project-site path for pranav-chavare/Redesign-portfolio.
+const basePath = "/Redesign-portfolio";
 
 const nextConfig = {
   output: "export",
-  images: {
-    unoptimized: true,
-  },
+  images: { unoptimized: true },
   basePath,
   assetPrefix: `${basePath}/`,
-  env: {
-    NEXT_PUBLIC_BASE_PATH: basePath,
-  },
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
 };
 
 module.exports = nextConfig;

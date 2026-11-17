@@ -4,101 +4,60 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light;
+  --paper: #f7f7f4;
+  --surface: #ffffff;
+  --ink: #17191c;
+  --muted: #73777e;
+  --line: #e5e6e2;
+  --accent: #635bdb;
+  --accent-soft: #eeedff;
+}
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 88px;
-    -webkit-text-size-adjust: 100%;
-  }
-  body {
-    @apply bg-paper font-body text-ink antialiased;
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    /* Faint graph-paper dots that fade out down the page. */
-    background-image: radial-gradient(circle at 1px 1px, rgba(21, 24, 26, 0.09) 1px, transparent 0);
-    background-size: 26px 26px;
-    background-attachment: scroll;
-  }
-  ::selection {
-    background: #cfd7fb;
-    color: #15181a;
-  }
-  :focus-visible {
-    outline: 2px solid #2b47c9;
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-  h1, h2, h3 {
-    @apply font-display;
-    text-wrap: balance;
-  }
+  html { scroll-behavior: smooth; scroll-padding-top: 100px; -webkit-text-size-adjust: 100%; }
+  body { @apply font-body antialiased; background: var(--paper); color: var(--ink); font-size: 1.0625rem; line-height: 1.65; }
+  ::selection { background: #dcd9ff; color: #17191c; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 5px; }
+  h1,h2,h3,h4 { @apply font-display; text-wrap: balance; }
   p { text-wrap: pretty; }
 }
-
 @layer components {
-  /* Inline text links: ballpoint underline that thickens on hover. */
-  .link {
-    @apply text-ink underline decoration-ballpoint/50 decoration-1 underline-offset-4 transition-[text-decoration-color,text-decoration-thickness];
-  }
-  .link:hover {
-    @apply decoration-ballpoint decoration-2;
-  }
-
-  /* Small chip used for skills, tags and focus areas. */
-  .chip {
-    @apply inline-flex items-center rounded-full border border-rule bg-card px-3 py-1 font-display text-[0.8125rem] font-medium leading-5 text-ink/80;
-  }
-
-  /* A ruler along the top edge of the page: major tick every 50px, minor every 10px. */
-  .ruler {
-    height: 18px;
-    background-image:
-      repeating-linear-gradient(90deg, #15181a 0 1px, transparent 1px 50px),
-      repeating-linear-gradient(90deg, rgba(21, 24, 26, 0.55) 0 1px, transparent 1px 10px);
-    background-size: 100% 18px, 100% 9px;
-    background-repeat: no-repeat, no-repeat;
-    background-position: left top, left top;
-    border-top: 1px solid rgba(21, 24, 26, 0.35);
-    -webkit-mask-image: linear-gradient(90deg, #000 60%, transparent);
-    mask-image: linear-gradient(90deg, #000 60%, transparent);
-  }
-
-  /* Pinned paper card. The tilt is deliberately tiny and differs per card. */
-  .pinned {
-    @apply relative rounded-[3px] border border-rule bg-card p-6 sm:p-7;
-    box-shadow: 0 1px 0 rgba(21, 24, 26, 0.04), 0 12px 24px -16px rgba(21, 24, 26, 0.28);
-    transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms;
-  }
-  .pinned::before {
-    /* The pin itself. */
-    content: "";
-    position: absolute;
-    top: -7px;
-    left: 50%;
-    width: 13px;
-    height: 13px;
-    margin-left: -6px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #5b74e6, #2b47c9 60%, #1f3499);
-    box-shadow: 0 2px 3px rgba(21, 24, 26, 0.35);
-  }
-  @media (min-width: 640px) {
-    .tilt-a { transform: rotate(-0.7deg); }
-    .tilt-b { transform: rotate(0.55deg); }
-    .tilt-c { transform: rotate(0.4deg); }
-    .tilt-d { transform: rotate(-0.5deg); }
-  }
-  .pinned.has-links:hover {
-    transform: rotate(0deg) translateY(-3px);
-    box-shadow: 0 1px 0 rgba(21, 24, 26, 0.04), 0 20px 30px -16px rgba(21, 24, 26, 0.35);
-  }
+  .site-header { position: fixed; z-index: 40; inset: 14px 0 auto; padding: 0 18px; }
+  .site-nav { max-width: 1120px; min-height: 58px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 8px 12px; border: 1px solid rgba(229,230,226,.9); border-radius: 18px; background: rgba(255,255,255,.86); box-shadow: 0 12px 36px -24px rgba(20,22,26,.35); backdrop-filter: blur(18px); }
+  .nav-mark { font: 700 1.15rem/1 "Bricolage Grotesque Variable",sans-serif; letter-spacing: -.07em; padding: 8px 10px; }
+  .nav-mark span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 3px; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { white-space: nowrap; border-radius: 10px; padding: 8px 11px; color: var(--muted); font: 500 .82rem/1 "Bricolage Grotesque Variable",sans-serif; transition: color .2s, background .2s; }
+  .nav-link:hover,.nav-link.is-active { color: var(--ink); background: #f1f1ef; }
+  .nav-resume { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; border-radius: 10px; background: var(--ink); color: white; padding: 10px 13px; font: 600 .8rem/1 "Bricolage Grotesque Variable",sans-serif; }
+  .chip { @apply inline-flex items-center rounded-full border px-3 py-1 font-display text-[0.8125rem] font-medium leading-5; border-color: var(--line); background: var(--surface); color: #555962; }
+  .link { color: var(--ink); text-decoration: underline; text-decoration-color: #aaa5f1; text-underline-offset: 5px; transition: text-decoration-color .2s; }
+  .link:hover { text-decoration-color: var(--accent); }
+  .section-divider { max-width: 1120px; height: 1px; margin: 0 auto; background: var(--line); }
+  .playground-shell,.github-panel { border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: 0 18px 45px -38px rgba(20,22,26,.35); }
+  .pipeline-step { border: 1px solid var(--line); border-radius: 14px; padding: 15px; background: #fbfbfa; }
+  .pipeline-step.is-current { border-color: #a8a3f1; background: var(--accent-soft); }
+  .pipeline-step.is-complete { border-color: #b7dfc8; background: #f1faf4; }
+  .action-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 10px; padding: 10px 13px; background: var(--ink); color: white; font: 600 .82rem/1 "Bricolage Grotesque Variable",sans-serif; transition: transform .2s, background .2s; }
+  .action-button:hover { transform: translateY(-1px); background: var(--accent); }
+  .action-button-secondary { background: #f1f1ef; color: var(--ink); }
+  .action-button-secondary:hover { background: #e7e6e2; color: var(--ink); }
+  .github-panel { display: flex; align-items: center; gap: 22px; padding: 28px; }
+  .ruler { height: 8px; background: linear-gradient(90deg,var(--accent),#aaa5f1 38%,transparent 100%); opacity: .75; }
+  .pinned { position: relative; height: 100%; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); padding: 25px; box-shadow: 0 15px 40px -34px rgba(20,22,26,.45); transition: transform .25s,box-shadow .25s; }
+  .pinned:hover { transform: translateY(-4px); box-shadow: 0 22px 42px -30px rgba(20,22,26,.3); }
+  .tilt-a,.tilt-b,.tilt-c,.tilt-d { transform: none; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-  }
+@media(max-width:760px) {
+  .site-header { inset: 8px 0 auto; padding: 0 8px; }
+  .site-nav { min-height: 54px; gap: 5px; padding: 6px; border-radius: 14px; }
+  .nav-links { gap: 0; }
+  .nav-link { padding: 9px 8px; font-size: .75rem; }
+  .nav-resume { display: none; }
+  .nav-mark { padding: 8px; }
+  .github-panel { align-items: flex-start; flex-wrap: wrap; padding: 20px; }
 }
+@media(max-width:420px) { .nav-link { padding: 9px 6px; font-size: .7rem; } }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms!important; animation-delay:0ms!important; transition-duration:.01ms!important; } }
